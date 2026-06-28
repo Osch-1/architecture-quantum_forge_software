@@ -21,7 +21,7 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-TERMS = ROOT / "terms_map.json"
+TERMS = ROOT / "data" / "terms_map.json"
 
 
 def load_pairs(lang: str) -> list[tuple[str, str]]:

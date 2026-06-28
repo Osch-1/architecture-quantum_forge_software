@@ -1,7 +1,7 @@
 """Проверка «неузнаваемости» базы знаний.
 
-Сканирует knowledge_base/**/*.md и убеждается, что НИ ОДИН канонический термин
-из terms_map.json не просочился в корпус. Это доказывает, что модель не сможет
+Сканирует data/knowledge_base/**/*.md и убеждается, что НИ ОДИН канонический
+термин из terms_map.json не просочился в корпус. Это доказывает, что модель не сможет
 «угадать» ответы по памяти об исходной вселенной.
 
 Выход: код 1, если найдена хотя бы одна утечка; иначе 0.
@@ -17,8 +17,8 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-KB = ROOT / "knowledge_base"
-TERMS = ROOT / "terms_map.json"
+KB = ROOT / "data" / "knowledge_base"
+TERMS = ROOT / "data" / "terms_map.json"
 
 
 def canon_terms() -> list[str]:

@@ -12,6 +12,7 @@ env/
 .env
 .env.*
 !.env.example
+.claude/
 
 # Caches
 .cache/
@@ -19,6 +20,9 @@ env/
 .mypy_cache/
 huggingface/
 *.log
+
+# Vector index (build artifact — пересобирается через scripts/build_index.py)
+faiss_index/
 
 # OS
 .DS_Store
