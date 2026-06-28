@@ -139,6 +139,23 @@ streamlit run app.py
 статья, в которую попал тот же пароль). Сценарии демонстрации — в
 [docs/task5_scenarios.md](docs/task5_scenarios.md).
 
+## Запуск в Docker
+
+Полный стек поднимается одной командой ([docker-compose.yml](docker-compose.yml) —
+сервис `ollama` с LLM и сервис `bot` со Streamlit; FAISS работает внутри `bot`):
+
+```powershell
+docker compose up --build
+```
+
+Веб-чат откроется на <http://localhost:8501>.
+
+Первый запуск долгий: Ollama скачивает модель `qwen2.5:7b-instruct` (~4.7 ГБ), а
+бот при сборке индекса — эмбеддер `Qwen3-Embedding-0.6B` (~1.2 ГБ). Дальше всё
+берётся из именованных томов (`ollama_models`, `hf_cache`, `faiss_index`), и старт
+быстрый. В Docker индекс собирается в прод-режиме: слой `safety_in` вычищает
+подсаженные пароли, и в индекс они не попадают.
+
 ## Проверки базы знаний
 
 ```powershell
