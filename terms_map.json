@@ -1,0 +1,81 @@
+{
+  "universe": "The Witcher (Анджей Сапковский / CD Projekt RED)",
+  "fictional_world": "Aerdmir / Аэрдемир — тёмное фэнтези о мутантах-охотниках на чудовищ",
+  "method": "Корпус написан сразу в вымышленной лексике. Этот словарь сопоставляет канонические термины (canon_en/canon_ru) с вымышленными (fic_en/fic_ru). scripts/replace_terms.py применяет замену канон->вымышленное к любому новому тексту; scripts/verify_terms.py проверяет, что в knowledge_base/ нет канонических терминов.",
+  "mappings": {
+    "core": [
+      {"canon_en": "witcher", "canon_ru": "ведьмак", "fic_en": "ashwarden", "fic_ru": "пепельный страж"},
+      {"canon_en": "The Continent", "canon_ru": "Континент", "fic_en": "Aerdmir", "fic_ru": "Аэрдемир", "common": true},
+      {"canon_en": "Chaos", "canon_ru": "Сила", "fic_en": "Aether", "fic_ru": "Эфир", "common": true},
+      {"canon_en": "Sign", "canon_ru": "Знак", "fic_en": "Glyph", "fic_ru": "Глиф", "common": true},
+      {"canon_en": "mutagen", "canon_ru": "мутаген", "fic_en": "reagent", "fic_ru": "реагент"},
+      {"canon_en": "Trial of the Grasses", "canon_ru": "Испытание Травами", "fic_en": "Trial of Ashes", "fic_ru": "Испытание Пеплом"},
+      {"canon_en": "silver", "canon_ru": "серебро", "fic_en": "moonsteel", "fic_ru": "лунная сталь", "common": true},
+      {"canon_en": "Law of Surprise", "canon_ru": "Право Неожиданности", "fic_en": "Claim of Chance", "fic_ru": "Право Случая"},
+      {"canon_en": "Elder Blood", "canon_ru": "Старшая Кровь", "fic_en": "Riven Blood", "fic_ru": "Кровь Разлома"},
+      {"canon_en": "witcher medallion", "canon_ru": "ведьмачий медальон", "fic_en": "warden's sigil", "fic_ru": "знак стража"}
+    ],
+    "characters": [
+      {"canon_en": "Geralt of Rivia", "canon_ru": "Геральт из Ривии", "fic_en": "Korven of Drael", "fic_ru": "Корвен из Драэля"},
+      {"canon_en": "Geralt", "canon_ru": "Геральт", "fic_en": "Korven", "fic_ru": "Корвен"},
+      {"canon_en": "Cirilla", "canon_ru": "Цирилла", "fic_en": "Aysenna", "fic_ru": "Айсенна"},
+      {"canon_en": "Ciri", "canon_ru": "Цири", "fic_en": "Aysa", "fic_ru": "Айса"},
+      {"canon_en": "Yennefer of Vengerberg", "canon_ru": "Йеннифэр из Венгерберга", "fic_en": "Veymira of Halgar", "fic_ru": "Веймира из Халгара"},
+      {"canon_en": "Yennefer", "canon_ru": "Йеннифэр", "fic_en": "Veymira", "fic_ru": "Веймира"},
+      {"canon_en": "Triss Merigold", "canon_ru": "Трисс Меригольд", "fic_en": "Brisa Aldwen", "fic_ru": "Бриса Алдвен"},
+      {"canon_en": "Triss", "canon_ru": "Трисс", "fic_en": "Brisa", "fic_ru": "Бриса"},
+      {"canon_en": "Vesemir", "canon_ru": "Весемир", "fic_en": "Olvar", "fic_ru": "Олвар"},
+      {"canon_en": "Dandelion", "canon_ru": "Лютик", "fic_en": "Lirio", "fic_ru": "Лирио"},
+      {"canon_en": "Emhyr var Emreis", "canon_ru": "Эмгыр вар Эмрейс", "fic_en": "Azmar var Ulreth", "fic_ru": "Азмар вар Улрет"},
+      {"canon_en": "Eskel", "canon_ru": "Эскель", "fic_en": "Derrin", "fic_ru": "Деррин"},
+      {"canon_en": "Lambert", "canon_ru": "Ламберт", "fic_en": "Varmun", "fic_ru": "Вармун"},
+      {"canon_en": "Regis", "canon_ru": "Регис", "fic_en": "Sevrin", "fic_ru": "Севрин"},
+      {"canon_en": "Roach", "canon_ru": "Плотва", "fic_en": "Cinder", "fic_ru": "Уголёк"}
+    ],
+    "locations": [
+      {"canon_en": "Kaer Morhen", "canon_ru": "Каэр Морхен", "fic_en": "Vael Korhal", "fic_ru": "Ваэль Корхаль"},
+      {"canon_en": "Novigrad", "canon_ru": "Новиград", "fic_en": "Brennar", "fic_ru": "Бреннар"},
+      {"canon_en": "Velen", "canon_ru": "Велен", "fic_en": "Mokrad", "fic_ru": "Мокрад"},
+      {"canon_en": "Temeria", "canon_ru": "Темерия", "fic_en": "Veldoria", "fic_ru": "Велдория"},
+      {"canon_en": "Nilfgaard", "canon_ru": "Нильфгаард", "fic_en": "Ulreth Imperium", "fic_ru": "Улретская империя"},
+      {"canon_en": "Skellige", "canon_ru": "Скеллиге", "fic_en": "Stormholt", "fic_ru": "Стормхольт"},
+      {"canon_en": "Toussaint", "canon_ru": "Туссент", "fic_en": "Sauvterre", "fic_ru": "Совтер"},
+      {"canon_en": "Vizima", "canon_ru": "Вызима", "fic_en": "Drennan", "fic_ru": "Дреннан"}
+    ],
+    "monsters": [
+      {"canon_en": "drowner", "canon_ru": "утопец", "fic_en": "mirewight", "fic_ru": "тинник"},
+      {"canon_en": "leshen", "canon_ru": "леший", "fic_en": "groveshade", "fic_ru": "древеник"},
+      {"canon_en": "striga", "canon_ru": "стрыга", "fic_en": "curseborn", "fic_ru": "проклятица"},
+      {"canon_en": "griffin", "canon_ru": "грифон", "fic_en": "skyrender", "fic_ru": "небокрыл"},
+      {"canon_en": "noonwraith", "canon_ru": "полуденница", "fic_en": "sunwraith", "fic_ru": "зноевица"},
+      {"canon_en": "higher vampire", "canon_ru": "высший вампир", "fic_en": "elder sanguine", "fic_ru": "древний кровник"},
+      {"canon_en": "ghoul", "canon_ru": "гуль", "fic_en": "gravelurk", "fic_ru": "могильник"}
+    ],
+    "glyphs": [
+      {"canon_en": "Igni", "canon_ru": "Игни", "fic_en": "Ignar", "fic_ru": "Игнар"},
+      {"canon_en": "Aard", "canon_ru": "Аард", "fic_en": "Vardh", "fic_ru": "Вардх"},
+      {"canon_en": "Quen", "canon_ru": "Квен", "fic_en": "Quel", "fic_ru": "Квель"},
+      {"canon_en": "Yrden", "canon_ru": "Ирден", "fic_en": "Yrn", "fic_ru": "Ирн"},
+      {"canon_en": "Axii", "canon_ru": "Аксий", "fic_en": "Axin", "fic_ru": "Аксин"}
+    ],
+    "potions": [
+      {"canon_en": "Swallow", "canon_ru": "Ласточка", "fic_en": "Larkdraught", "fic_ru": "Зарянка", "common": true},
+      {"canon_en": "Thunderbolt", "canon_ru": "Гром", "fic_en": "Stormdraught", "fic_ru": "Громобой", "common": true},
+      {"canon_en": "Cat", "canon_ru": "Кошка", "fic_en": "Owldraught", "fic_ru": "Совелад", "common": true}
+    ],
+    "factions_races": [
+      {"canon_en": "School of the Wolf", "canon_ru": "Школа Волка", "fic_en": "Lodge of the Lynx", "fic_ru": "Школа Рыси"},
+      {"canon_en": "Lodge of Sorceresses", "canon_ru": "Ложа Чародеек", "fic_en": "Conclave of Veils", "fic_ru": "Конклав Завес"},
+      {"canon_en": "sorceress", "canon_ru": "чародейка", "fic_en": "veilweaver", "fic_ru": "ткачиха завес"},
+      {"canon_en": "Scoia'tael", "canon_ru": "Скоятаэли", "fic_en": "Thornblades", "fic_ru": "Терновники"},
+      {"canon_en": "Wild Hunt", "canon_ru": "Дикая Охота", "fic_en": "Wraith Host", "fic_ru": "Призрачная Свора"},
+      {"canon_en": "elves", "canon_ru": "эльфы", "fic_en": "Sylvani", "fic_ru": "сильвани"},
+      {"canon_en": "dwarves", "canon_ru": "краснолюды", "fic_en": "Dolgan", "fic_ru": "долганы"}
+    ],
+    "events": [
+      {"canon_en": "Conjunction of the Spheres", "canon_ru": "Сопряжение Сфер", "fic_en": "Riftfall", "fic_ru": "Разлом Сфер"},
+      {"canon_en": "Battle of Sodden Hill", "canon_ru": "Битва под Содденом", "fic_en": "Battle of Ashmoor", "fic_ru": "Битва при Пепельной гряде"},
+      {"canon_en": "Thanedd coup", "canon_ru": "Мятеж на Танедде", "fic_en": "Spire Betrayal", "fic_ru": "Измена на Шпиле"}
+    ]
+  }
+}
