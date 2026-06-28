@@ -6,6 +6,7 @@
 """
 from __future__ import annotations
 
+import os
 from pathlib import Path
 
 from langchain_huggingface import HuggingFaceEmbeddings
@@ -19,7 +20,7 @@ INDEX_DIR = ROOT / "faiss_index"
 # контекст 32K, Apache-2.0, instruction-aware.
 EMBED_MODEL = "Qwen/Qwen3-Embedding-0.6B"
 # Пиннинг ревизии модели = воспроизводимость + защита от supply-chain (модель
-# может «уехать» под нами). См. конспект «Генерация эмбеддингов» §6.
+# может «уехать» под нами).
 EMBED_REVISION = "97b0c614be4d77ee51c0cef4e5f07c00f9eb65b3"  # пин commit SHA снапшота
 
 # Qwen3 instruction-aware: к ЗАПРОСУ добавляется инструкция, ДОКУМЕНТЫ кодируются
@@ -52,3 +53,24 @@ def get_embeddings(show_progress: bool = False) -> HuggingFaceEmbeddings:
             "prompt": QUERY_PROMPT,
         }
     return HuggingFaceEmbeddings(**kwargs)
+
+
+# --- LLM (Task 4: бот через Ollama) -----------------------------------------
+# Локальная чат-модель через Ollama. Имя модели и адрес — через переменные
+# окружения, чтобы в Docker подменить host на сервис `ollama` без правки кода.
+OLLAMA_MODEL = os.getenv("OLLAMA_MODEL", "qwen2.5:7b-instruct")
+OLLAMA_BASE_URL = os.getenv("OLLAMA_BASE_URL", "http://localhost:11434")
+LLM_TEMPERATURE = 0.1   # низкая: ответ держится контекста, меньше домыслов
+RETRIEVE_K = 4          # сколько чанков кладём в контекст (корпус маленький)
+
+
+def get_llm():
+    """Локальная чат-модель через Ollama (provider-agnostic, см. §1 отчёта)."""
+    # Ленивый импорт: сборке индекса (build_index.py) Ollama не нужна.
+    from langchain_ollama import ChatOllama
+
+    return ChatOllama(
+        model=OLLAMA_MODEL,
+        base_url=OLLAMA_BASE_URL,
+        temperature=LLM_TEMPERATURE,
+    )

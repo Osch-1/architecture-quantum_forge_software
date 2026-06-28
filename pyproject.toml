@@ -19,6 +19,8 @@ dependencies = [
     "langchain-huggingface==1.2.2",
     "langchain-text-splitters==1.1.2",
     "langchain-ollama==1.1.0",
+    # Интерфейс бота (Task 4)
+    "streamlit>=1.40,<2",
     # Утилиты
     "PyYAML==6.0.3",
 ]

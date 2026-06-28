@@ -1,6 +1,6 @@
 """Сборка векторного индекса FAISS из базы знаний.
 
-Пайплайн (см. конспект «Генерация эмбеддингов и векторные базы»):
+Пайплайн:
   knowledge_base/**/*.md
     → парсинг frontmatter (метаданные для цитат и фильтрации)
     → нарезка тела на чанки с overlap (RecursiveCharacterTextSplitter,
@@ -9,11 +9,20 @@
     → FAISS (IndexFlatIP, точный поиск — корпус маленький)
     → сохранение в faiss_index/
 
+Безопасность (Task 5): по умолчанию на загрузке работает слой safety_in —
+чанки-трояны выбрасываются, а вкраплённые инструкции вырезаются ещё ДО эмбеддинга,
+чтобы утёкший пароль вообще не попал в индекс. Это первая линия защиты;
+онлайн-фильтры в rag_chain.py — вторая.
+Флаг --keep-injections отключает safety_in (нужен только для демонстрации утечки
+в Task 5: чтобы документ-троян оказался в индексе и сработали онлайн-слои).
+
 Запуск:
-    python scripts/build_index.py
+    python scripts/build_index.py                  # прод: с очисткой источника
+    python scripts/build_index.py --keep-injections  # демо: трояны остаются в индексе
 """
 from __future__ import annotations
 
+import argparse
 import sys
 import time
 from pathlib import Path
@@ -36,6 +45,7 @@ from rag_config import (  # noqa: E402
     ROOT,
     get_embeddings,
 )
+from security import is_malicious, sanitize_chunk  # noqa: E402
 
 
 def parse_doc(path: Path) -> tuple[str, dict]:
@@ -54,18 +64,41 @@ def parse_doc(path: Path) -> tuple[str, dict]:
 
 def load_chunks(
     splitter: RecursiveCharacterTextSplitter,
-) -> tuple[list[Document], list[Path]]:
-    """Читает базу знаний и режет её на чанки-документы с метаданными."""
+    safety_in: bool = True,
+) -> tuple[list[Document], list[Path], dict]:
+    """Читает базу знаний и режет её на чанки-документы с метаданными.
+
+    safety_in=True — слой очистки источника: чанк с утёкшим паролем выбрасывается,
+    вкраплённая инструкция вырезается. Так пароль не попадает в индекс вообще.
+    """
     chunks: list[Document] = []
+    stats = {"dropped": 0, "sanitized": 0}
     files = sorted(KB_DIR.rglob("*.md"))
     for path in files:
         body, meta = parse_doc(path)
         for i, piece in enumerate(splitter.split_text(body)):
+            if safety_in:
+                if is_malicious(piece):
+                    stats["dropped"] += 1
+                    continue
+                cleaned = sanitize_chunk(piece)
+                if cleaned != piece:
+                    stats["sanitized"] += 1
+                    piece = cleaned
             chunks.append(Document(page_content=piece, metadata={**meta, "chunk_index": i}))
-    return chunks, files
+    return chunks, files, stats
 
 
 def main() -> None:
+    parser = argparse.ArgumentParser(description="Сборка FAISS-индекса из базы знаний.")
+    parser.add_argument(
+        "--keep-injections",
+        action="store_true",
+        help="отключить safety_in: оставить чанки-трояны в индексе (только для демо Task 5)",
+    )
+    args = parser.parse_args()
+    safety_in = not args.keep_injections
+
     t0 = time.perf_counter()
 
     # Сплиттер: длина в токенах модели (а не в символах) — контролируем ту же
@@ -78,10 +111,18 @@ def main() -> None:
         separators=["\n\n", "\n", ". ", "! ", "? ", "; ", " ", ""],
     )
 
-    chunks, files = load_chunks(splitter)
+    chunks, files, safety_stats = load_chunks(splitter, safety_in=safety_in)
     if not chunks:
         print("Ошибка: в knowledge_base/ не найдено документов.")
         sys.exit(1)
+
+    if safety_in:
+        print(
+            f"safety_in: очистка источника — отброшено чанков-троянов: "
+            f"{safety_stats['dropped']}, очищено чанков: {safety_stats['sanitized']}."
+        )
+    else:
+        print("safety_in: ОТКЛЮЧЕН (--keep-injections) — трояны остаются в индексе.")
 
     by_lang: dict[str, int] = {}
     for c in chunks:
