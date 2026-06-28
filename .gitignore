@@ -1,0 +1,25 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg
+*.egg-info/
+.venv/
+venv/
+env/
+.ipynb_checkpoints/
+
+# Secrets / local config
+.env
+.env.*
+!.env.example
+
+# Caches
+.cache/
+.pytest_cache/
+.mypy_cache/
+huggingface/
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
