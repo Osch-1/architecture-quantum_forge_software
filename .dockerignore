@@ -1,0 +1,19 @@
+# Сборочный контекст: оставляем только то, что нужно образу (scripts, data, app).
+.venv/
+.git/
+.gitignore
+faiss_index/
+**/__pycache__/
+*.py[cod]
+.claude/
+.mypy_cache/
+.pytest_cache/
+huggingface/
+.cache/
+assets/
+docs/
+Project_template.md
+README.md
+Task.md
+.env
+.env.*

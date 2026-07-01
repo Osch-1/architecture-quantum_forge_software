@@ -1,0 +1,44 @@
+# Полный стек QuantumForge RAG: Ollama (LLM) + бот (Streamlit, FAISS в процессе).
+#
+#   docker compose up --build
+#
+# Первый запуск долгий: Ollama тянет модель qwen2.5:7b-instruct (~4.7 ГБ), а бот
+# при сборке индекса скачивает эмбеддер Qwen3-Embedding-0.6B (~1.2 ГБ). Дальше всё
+# берётся из именованных томов. Веб-чат: http://localhost:8501
+services:
+  ollama:
+    image: ollama/ollama:latest
+    environment:
+      OLLAMA_MODEL: qwen2.5:7b-instruct
+    # Поднимаем сервер и один раз тянем модель (дальше она в томе ollama_models).
+    entrypoint: ["/bin/sh", "-c"]
+    command:
+      - 'ollama serve & until ollama list >/dev/null 2>&1; do sleep 1; done; ollama pull "$$OLLAMA_MODEL"; wait'
+    volumes:
+      - ollama_models:/root/.ollama
+    healthcheck:
+      # Готов, только когда модель реально скачана.
+      test: ["CMD-SHELL", "ollama list | grep -q qwen2.5 || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 90
+      start_period: 20s
+
+  bot:
+    build: .
+    depends_on:
+      ollama:
+        condition: service_healthy
+    environment:
+      OLLAMA_BASE_URL: http://ollama:11434
+      OLLAMA_MODEL: qwen2.5:7b-instruct
+    volumes:
+      - hf_cache:/app/.hf-cache       # кэш эмбеддера (скачивается один раз)
+      - faiss_index:/app/faiss_index  # собранный индекс
+    ports:
+      - "8501:8501"
+
+volumes:
+  ollama_models:
+  hf_cache:
+  faiss_index:

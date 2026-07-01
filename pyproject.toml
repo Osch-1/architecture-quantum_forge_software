@@ -1,0 +1,31 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "quantumforge-rag"
+version = "0.1.0"
+description = "RAG-бот по корпоративной базе знаний QuantumForge Software (учебный проект, спринт 7)"
+requires-python = ">=3.11"
+dependencies = [
+    # Эмбеддинги и векторный индекс (Task 3)
+    "torch==2.12.1",
+    "sentence-transformers==5.6.0",
+    "faiss-cpu==1.14.3",
+    "transformers==5.12.1",
+    # RAG-оркестрация (Task 3–4)
+    "langchain==1.3.11",
+    "langchain-community==0.4.2",
+    "langchain-huggingface==1.2.2",
+    "langchain-text-splitters==1.1.2",
+    "langchain-ollama==1.1.0",
+    # Интерфейс бота (Task 4)
+    "streamlit>=1.40,<2",
+    # Утилиты
+    "PyYAML==6.0.3",
+]
+
+# Проект — набор скриптов в scripts/, не устанавливаемый пакет.
+# `pip install .` ставит только зависимости из [project.dependencies].
+[tool.setuptools]
+py-modules = []

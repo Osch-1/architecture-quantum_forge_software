@@ -1,0 +1,29 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg
+*.egg-info/
+.venv/
+venv/
+env/
+.ipynb_checkpoints/
+
+# Secrets / local config
+.env
+.env.*
+!.env.example
+.claude/
+
+# Caches
+.cache/
+.pytest_cache/
+.mypy_cache/
+huggingface/
+*.log
+
+# Vector index (build artifact — пересобирается через scripts/build_index.py)
+faiss_index/
+
+# OS
+.DS_Store
+Thumbs.db
